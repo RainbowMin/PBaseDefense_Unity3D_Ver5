@@ -1,0 +1,23 @@
+@startuml
+ISceneState <|-- BattleState
+ISceneState <|-- StartState
+ISceneState <|-- MainMenuState
+SceneStateController --> ISceneState 
+
+class ISceneState
+{
+    +void StateBegin()
+    +void StateEnd()
+    +void StateUpdate()
+}
+
+class SceneStateController
+{
+    +void SetState()
+    +void StateUpdate()
+    +void LoadScene(string LoadSceneName)
+
+    -ISceneState m_State
+}
+
+@enduml

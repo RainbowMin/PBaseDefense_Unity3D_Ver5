@@ -1,0 +1,73 @@
+@startuml
+
+
+package system <<Frame>> {
+class APSystem
+class AchievementSystem
+class GameEventSystem
+class CharacterSystem
+class StageSystem
+class CampSystem
+class CharacterBuilderSystem
+}
+
+package ui <<Frame>> {
+class CampInfoUI
+class GamePauseUI
+class GameStateInfoUI
+class SoldierInfoUI
+}
+
+PBaseDefenseGame *-- system
+PBaseDefenseGame *-- ui
+
+IGameSystem <|-- CampSystem
+IGameSystem <|-- APSystem
+IGameSystem <|-- AchievementSystem
+IGameSystem <|-- CharacterBuilderSystem
+IGameSystem <|-- CharacterSystem
+IGameSystem <|-- GameEventSystem
+IGameSystem <|-- StageSystem
+
+abstract class IGameSystem
+{
+    #PBaseDefenseGame m_PBDGame
+
+    +IGameSystem( PBaseDefenseGame PBDGame )
+    +void Initialize()
+    +void Release()
+    +void Update()
+}
+
+IUserInterface <|-- CampInfoUI
+IUserInterface <|-- GamePauseUI
+IUserInterface <|-- GameStateInfoUI
+IUserInterface <|-- SoldierInfoUI
+
+abstract class IUserInterface
+{
+    #PBaseDefenseGame m_PBDGame
+    #GameObject m_RootUI
+    -bool m_bActive
+
+    +IUserInterface( PBaseDefenseGame PBDGame )
+    +bool IsVisible()
+    +void Show()
+    +void Hide()
+    +Initialize()
+    +Release()
+    +Update()
+}
+
+note top of PBaseDefenseGame : 是Facade和Mediator的角色
+
+BattleState --> PBaseDefenseGame
+
+note as N1
+    PBaseDefenseGame类作用：
+    将PBaseDefenseGame类用外观模式Facade让游戏系统整合在单一界面之下，“对外”作为对客户端的操作接口时使用; 
+    将PBaseDefenseGame类用中介者模式让其“对内”成为系统之间的沟通接口。
+    类里包含所有游戏系统及玩家界面等对象，并负责它们的产生和初始化，另外也提供系统之间相互沟通的方法
+end note
+
+@enduml
