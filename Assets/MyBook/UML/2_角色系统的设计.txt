@@ -1,0 +1,75 @@
+@startuml
+ICharacter <|-- ISoldier
+ICharacter <|-- IEnemy
+ISoldier <|-- SoldierCaptain
+ISoldier <|-- SoldierCaptive
+ISoldier <|-- SoldierRookie
+ISoldier <|-- SoldierSergeant
+IEnemy <|-- EnemyCaptive
+IEnemy <|-- EnemyElf
+IEnemy <|-- EnemyOgre
+IEnemy <|-- EnemyTroll
+
+
+abstract class ICharacter
+{
+    # string            m_Name
+    # GameObject        m_GameObject
+    # NavMeshAgent      m_NavAgent
+    # AudioSource       m_Audio
+    # string 	        m_IconSpriteName
+    # string 	        m_AssetName
+    # int		        m_AttrID
+    ~ IWeapon           m_Weapon
+    # ICharacterAttr    m_Attribute
+    # ICharacterAI      m_AI
+
+    + void SetGameObject()
+    + GameObject GetGameObject()
+    + void Release()
+    + void Update()
+    + ICharacterAttr GetCharacterAttr()
+    + void MoveTo(Vector3 Position)
+    + void StopMove()
+    + void SetAI(ICharacterAI CharacterAI)
+    + void UpdateAI(List<ICharacter> Targets)
+    + void UpdateAI(List<ICharacter> Targets)
+    + void Attack(ICharacter Target)
+    + abstract void UnderAttack( ICharacter Attacker)
+
+    + void SetWeapon(IWeapon Weapon)
+    # void SetWeaponAtkPlusValue(int Value)
+    # void WeaponAttackTarget( ICharacter Target)
+
+    + virtual void SetCharacterAttr(ICharacterAttr CharacterAttr)
+
+    + void PlaySound(string ClipName)
+    + void PlayEffect(string EffectName)
+    + virtual void RunVisitor(ICharacterVisitor Visitor)
+}
+
+abstract class ISoldier
+{
+    # ENUM_Soldier m_emSoldier
+
+    + ENUM_Soldier GetSoldierType()
+    + SoldierAttr GetSoldierValue()
+    + override void UnderAttack( ICharacter Attacker )
+    + override void RunVisitor(ICharacterVisitor Visitor)
+    + abstract void DoPlayKilledSound();
+    + abstract void DoShowKilledEffect();
+}
+
+class SoldierCaptain
+{
+    + override void DoPlayKilledSound()
+    + override void DoShowKilledEffect()
+    + override void RunVisitor(ICharacterVisitor Visitor)
+}
+
+@enduml
+
+- private
+# protected
+~ package private
++ public
