@@ -1,0 +1,36 @@
+@startuml
+class ICharacter{
+  #ICharacterAttr m_Attribute
+}
+
+class ICharacterAttr {
+  #m_MaxHp
+  #m_MoveSpeed
+  +InitAttr()
+  +GetAtkPlusValue()
+  +CalDmgValue()
+}
+
+class IAttrStrategy{
+  +InitAttr()
+  +GetAtkPlusValue()
+  +GetDmgDescValue()
+}
+
+class EnemyAttrStrategy{
+  +InitAttr()
+  +GetAtkPlusValue()
+  +GetDmgDescValue()
+}
+
+class SoldierAttrStrategy{
+  +InitAttr()
+  +GetAtkPlusValue()
+  +GetDmgDescValue()
+}
+
+ICharacter *--ICharacterAttr 
+ICharacterAttr *--IAttrStrategy
+IAttrStrategy<|--EnemyAttrStrategy
+IAttrStrategy<|--SoldierAttrStrategy
+@enduml

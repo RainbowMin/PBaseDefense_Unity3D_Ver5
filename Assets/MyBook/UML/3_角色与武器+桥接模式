@@ -1,0 +1,42 @@
+@startuml
+class ICharacter{
+   m_Weapon
+   WeaponAttackTarget(ICharacer target)
+   Attack(ICharacter target)
+}
+
+class ISoldier{
+   Attack(ICharacter target)
+}
+
+class IEnemy{
+   Attack(ICharacter target)
+}
+
+ICharacter<|--ISoldier
+ICharacter<|--IEnemy
+
+class IWeapon{
+   Fire(ICharacter target)
+}
+
+class WeaponGUN{
+   Fire(ICharacter target)
+}
+
+class WeaponRifle{
+   Fire(ICharacter target)
+}
+
+class WeaponRocket{
+   Fire(ICharacter target)
+}
+
+IWeapon<|--WeaponGUN
+
+IWeapon<|--WeaponRifle
+
+IWeapon<|--WeaponRocket
+
+IWeapon <--ICharacter
+@enduml
